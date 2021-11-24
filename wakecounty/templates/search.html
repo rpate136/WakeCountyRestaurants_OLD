@@ -1,6 +1,41 @@
 {% extends 'navbar.html' %}
 
 {% block content %}
+<style>
+    .dataframe {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(196, 85, 85, 0.15);
+}
+.dataframetr {
+    background-color: #009879;
+    color: #816a6a;
+    text-align: left;
+}
+.dataframeth,
+.dataframe td {
+    padding: 12px 15px;
+}
+
+.dataframe tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.dataframe tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.dataframetbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+.dataframetbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+    </style>
 <br>
 <h3 style="margin:10px 20px;">Select City to search in</h3>
 <div style="margin:10px 20px;" class="dropdown">

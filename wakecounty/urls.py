@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from wakecountyapp.views import home , plot , search ,searchRestuarents
+from wakecountyapp.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', plot),
-    path('search/', searchRestuarents)
+    path('search/', searchRestuarents),
+    path('oneRest/', oneRestaurant)
+
 ]

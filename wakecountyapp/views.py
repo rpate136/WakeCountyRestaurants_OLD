@@ -38,6 +38,10 @@ def searchRestuarents(request):
 
     return render(request,"search.html",{"df_Incity_html":df_Incity_html})
 
+def oneRestaurant(request):
+
+    return render(request,"oneRest.html",{})
+
 def home (request):
     print("hello")
     return render(request,"navbar.html")
