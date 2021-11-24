@@ -1,0 +1,32 @@
+{% extends 'navbar.html' %}
+
+{% block content %}
+<br>
+<h3 style="margin:10px 20px;">Select City to search in</h3>
+<div style="margin:10px 20px;" class="dropdown">
+    
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Dropdown
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+      <button class="dropdown-item" type="button">Cary</button>
+      <button class="dropdown-item" type="button">Raleigh</button>
+      <button class="dropdown-item" type="button">Knightdale</button>
+      <button class="dropdown-item" type="button">Apex</button>
+      <button class="dropdown-item" type="button">Morrisville</button>
+      <button class="dropdown-item" type="button">Fuaquay Varina</button>
+
+    </div>
+
+    <div style="margin:10px 20px;" >
+        {%if df_Incity_html %}
+        {{df_Incity_html|safe}}
+        {% else %}
+        <p>No graph was provided.</p>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}
