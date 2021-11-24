@@ -31,12 +31,25 @@ restaurants = getRestaurantsDf()
 
 #-------------------------------------------------------------------------------------------------------
 
-def searchRestuarents(request):
-    #city = City
-    df_Incity = restaurants.loc[(restaurants['CITY'] == "RALEIGH") & (restaurants['year'] == 2020)]
-    df_Incity_html =  df_Incity.to_html()
 
-    return render(request,"search.html",{"df_Incity_html":df_Incity_html})
+def searchRestuarents(request):
+
+    return render(request,"search.html")
+
+
+def overallAnalysis(request):
+
+    return render(request,"overallAnalysis.html")
+
+def searchRestuarentsOutput(request):
+    inp1 = request.POST.get('CityName')
+    inp2 = request.POST.get('param1')
+    print(inp1, "  ", inp2)
+    df_search = restaurants.loc[(restaurants['CITY'] == inp1) & (restaurants['year'] == int(inp2))]
+    df_search = df_search.drop(["OBJECTID","RESTAURANTOPENDATE","X","Y","GEOCODESTATUS","month"] , axis =1)
+    df_search_html =  df_search.to_html()
+
+    return render(request,"search.html",{"df_search_html":df_search_html})
 
 def oneRestaurant(request):
 

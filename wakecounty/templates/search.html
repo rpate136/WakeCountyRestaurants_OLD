@@ -35,33 +35,39 @@
     font-weight: bold;
     color: #009879;
 }
-    </style>
+</style>
+
 <br>
-<h3 style="margin:10px 20px;">Select City to search in</h3>
 <div style="margin:10px 20px;" class="dropdown">
     
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Dropdown
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-      <button class="dropdown-item" type="button">Cary</button>
-      <button class="dropdown-item" type="button">Raleigh</button>
-      <button class="dropdown-item" type="button">Knightdale</button>
-      <button class="dropdown-item" type="button">Apex</button>
-      <button class="dropdown-item" type="button">Morrisville</button>
-      <button class="dropdown-item" type="button">Fuaquay Varina</button>
-
+    <form action="/searchRestuarentsOutput/" method="post">
+        {% csrf_token %}
+    <div class="input-group mb-2">
+        <label class="input-group-text" for="inputGroupSelect01">Select City</label>
+        <select class="form-select" name = "CityName" required>
+          <option selected>Choose...</option>
+          <option value="RALEIGH">Raleigh</option>
+          <option value="CARY">Cary</option>
+          <option value="APEX">Apex</option>
+          <option value="MORRISVILLE">Morrisville</option>
+          <option value="FUYQUAY VARINA">FV</option>
+        </select>
+      </div>
+    <div class="input-group flex-nowrap">
+        <span class="input-group-text" id="date1">Enter Year Restuarant was open</span>
+        <input type="int" name="param1" value = 2021 required/><br><br>
     </div>
+    <br>
+    <button type = "submit" class = "btn btn-dark">Submit</button><br> <br>
+
 
     <div style="margin:10px 20px;" >
-        {%if df_Incity_html %}
-        {{df_Incity_html|safe}}
-        {% else %}
-        <p>No graph was provided.</p>
+        {%if df_search_html %}
+        {{df_search_html|safe}}
         {% endif %}
 
     </div>
-
+    </form>
 </div>
 
 {% endblock %}
