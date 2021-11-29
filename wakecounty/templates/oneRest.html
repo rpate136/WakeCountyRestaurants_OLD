@@ -1,5 +1,59 @@
 {% extends 'navbar.html' %}
 
 {% block content %}
+<style>
+.dataframe {
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(196, 85, 85, 0.15);
+}
+.dataframe tr {
+    background-color: #f1efeb;
+    color: #816a6a;
+    text-align: center;
+}
+.dataframe td {
+    padding: 10px 12px;
+}
+
+.dataframetbody tr:last-of-type {
+    border-bottom: 10x solid hsl(0, 0%, 3%);
+}
+
+</style>
+
+<br>
+<div style="margin:10px 20px;" class="dropdown">
+    
+    <form action="/oneRestOutput/" method="post">
+        {% csrf_token %}
+   
+    <div class="input-group flex-nowrap">
+        <span class="input-group-text" id="date1">Enter the HSISID</span>
+        <input type="int" name="HSISIDparm1" required/><br><br>
+    </div>
+    <br>
+    <button type = "submit" class = "btn btn-dark">Submit</button><br> <br>
+
+    <div>
+
+    {% if graph %}
+    <h3>Number of Critical inspection findings</h3>
+    {{ critical|safe }}
+    {% endif %}
+
+    <br><br>
+    
+    {% if graph %}
+    {{ graph|safe }}
+    {% endif %}
+
+    </div>
+    
+    </form>
+</div>
 
 {% endblock %}

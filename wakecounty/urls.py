@@ -22,8 +22,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', plot),
     path('search/', searchRestuarents),
+    path('searchRestuarentsOutput/', searchRestuarentsOutput),
     path('oneRest/', oneRestaurant),
-    path('searchRestuarentsOutput/',searchRestuarentsOutput),
+    path('oneRestOutput/', oneRestaurantOutput),
+    #path('searchRestuarentsOutput/',oneRestaurantOutput),
     path('analysis/',overallAnalysis),
 
 ]
