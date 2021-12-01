@@ -10,7 +10,6 @@ import requests
 def getRestaurantsDf():
     print('Fetching restaurants data...')
     val = 'https://opendata.arcgis.com/datasets/124c2187da8c41c59bde04fa67eb2872_0.geojson'
-
     # Sending get request and saving the response as response object
     # extracting data in json 
     r = requests.get(url = val)
@@ -29,10 +28,7 @@ def getRestaurantsDf():
 
 def getOneRestaurantInspDf(id):
     print('Fetching restaurants data...')
-    id = "04092016133"
     val = f"https://maps.wakegov.com/arcgis/rest/services/Inspections/RestaurantInspectionsOpenData/MapServer/2/query?where=HSISID='{id}'&where=1%3D1&outFields=*&outSR=4326&f=json"
-
-
     # Sending get request and saving the response as response object
     # extracting data in json 
     r = requests.get(url = val)
@@ -93,12 +89,30 @@ def oneRestaurantOutput(request):
     #category pie chart
     categoryDF = pd.DataFrame(dfCriticalYes['CATEGORY'].value_counts())
     categoryDF = categoryDF.reset_index()
-    fig = px.pie(categoryDF, values='CATEGORY', names='index', title='Breakdown of Category of risk factor for Critical Inspections')
-    graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+    fig1 = px.pie(categoryDF, values='CATEGORY', names='index', title='Breakdown of Category of risk factor for Critical Inspections')
+    graph = fig1.to_html(full_html=False, default_height=500, default_width=700)
     #number of critical inspections
     criticalDF = (pd.DataFrame(df['CRITICAL'].value_counts()))
     criticalDF = criticalDF.to_html()
-    graphs = {'graph': graph , 'critical': criticalDF}
-
+    #description of inspection findings totals
+    descDF = pd.DataFrame(dfCriticalYes['SHORTDESC'].value_counts())
+    descDF.index.name = 'Description'
+    descDF = descDF.to_html()
+    #violation type total 
+    violationDF = pd.DataFrame(df['VIOLATIONTYPE'].value_counts())
+    violationDF.index.name = 'Violation Type'
+    violationDF = violationDF.rename(columns={"VIOLATIONTYPE":'TOTAL'})
+    violationDF = violationDF.reset_index()
+    fig2 = px.bar(violationDF, x='Violation Type', y='TOTAL', title='Breakdown of Category of risk factor for Critical Inspections')
+    violationBar = fig2.to_html(full_html=False, default_height=500, default_width=700)
+ 
+    graphs = {'graph': graph , 'critical': criticalDF, 'desc': descDF, 'violation':violationBar}
     return render(request,"oneRest.html",graphs)
+
+
+def RestaurantAnalysis(request):
+    
+
+
+    return render(request,"OneRestAnalysis.html")
 

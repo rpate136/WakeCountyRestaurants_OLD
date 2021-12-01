@@ -20,12 +20,11 @@ from wakecountyapp.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', plot),
     path('search/', searchRestuarents),
     path('searchRestuarentsOutput/', searchRestuarentsOutput),
     path('oneRest/', oneRestaurant),
     path('oneRestOutput/', oneRestaurantOutput),
-    #path('searchRestuarentsOutput/',oneRestaurantOutput),
-    path('analysis/',overallAnalysis),
+    path('OneRestanalysis/',RestaurantAnalysis),
+    path('Overallanalysis/',overallAnalysis),
 
 ]
