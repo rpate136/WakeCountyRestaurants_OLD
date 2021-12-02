@@ -147,10 +147,12 @@ def RestaurantAnalysis(request):
     numRestWTime_fig = px.line(numRestWTime, x='Year', y="Number Of Restuarants",title='Number of Restuarants with time in Wake County')
     numRestWTime_fig = numRestWTime_fig.to_html(full_html=False, default_height=500, default_width=800)
 
-    mapDF = df[['HSISID','NAME','CITY','X','Y','GEOCODESTATUS']].copy()
+    mapDF = df[['HSISID','NAME','CITY','X','Y','GEOCODESTATUS','FACILITYTYPE']].copy()
     mapDF['X'] = mapDF['X'].astype(float, errors = 'raise')
     mapDF['Y'] = mapDF['Y'].astype(float, errors = 'raise')
-    mapDF_fig = px.scatter_geo(mapDF,lat=mapDF['Y'],lon=mapDF['X'], hover_name="NAME")                    
+    token = "pk.eyJ1Ijoia2FyZGluaTMwMSIsImEiOiJja3dvZG84a2UwMXVwMm5zNm55aTcwcDcyIn0.82Pz65yxgNlgN60FhaS3OQ"
+    px.set_mapbox_access_token(token)                    
+    mapDF_fig = px.scatter_mapbox(mapDF,lat=mapDF['Y'],lon=mapDF['X'], hover_name="NAME",color = mapDF["FACILITYTYPE"],zoom = 7)
     mapDF_fig = mapDF_fig.to_html(full_html=False, default_height=500, default_width=1500)
 
     graphs = {'facilityType': facttype_fig , 'numRestinCity':city_fig , 'numOfRest':numRestWTime_fig , 'map': mapDF_fig}
