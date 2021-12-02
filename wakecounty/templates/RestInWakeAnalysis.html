@@ -1,0 +1,52 @@
+{% extends 'navbar.html' %}
+
+{% block content %}
+<Style>
+    .inline-block-child {
+  display: inline-block;
+}
+</Style>
+
+<body>
+
+<br>
+
+<div style="margin:10px 100px;">
+    
+    <h3>Basic analysis of Resturants in Wake County</h3>
+    
+    {% if numRestinCity %}
+    {{ numRestinCity | safe }}
+    {% endif %}
+
+    <br>
+
+    <div class = 'Parent'>
+
+    <div class = 'child inline-block-child'>
+    {% if facilityType %}
+    {{ facilityType | safe }}
+    {% endif %}
+    </div>
+    <div class='child inline-block-child'>
+    {% if numOfRest %}
+    {{ numOfRest | safe }}
+    {% endif %}
+    </div>
+
+    <h3>Map of Resturants in Wake County</h3>
+    {% if map %}
+    {{ map | safe }}
+    {% endif %}
+
+    </div>
+
+
+</div>
+
+
+
+
+</body>
+
+{% endblock %}

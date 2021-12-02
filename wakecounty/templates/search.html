@@ -2,66 +2,67 @@
 
 {% block content %}
 <style>
-    .dataframe {
+.dataframe {
     border-collapse: collapse;
-    margin: 25px 0;
+    margin: 20px 0;
     font-size: 0.9em;
     font-family: sans-serif;
     min-width: 400px;
     box-shadow: 0 0 20px rgba(196, 85, 85, 0.15);
 }
-.dataframetr {
-    background-color: #009879;
+.dataframe tr {
+    background-color: #f1efeb;
     color: #816a6a;
-    text-align: left;
+    text-align: right;
 }
-.dataframeth,
 .dataframe td {
-    padding: 12px 15px;
-}
-
-.dataframe tbody tr {
-    border-bottom: 1px solid #dddddd;
-}
-
-.dataframe tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
+    padding: 10px 12px;
 }
 
 .dataframetbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
+    border-bottom: 10x solid hsl(0, 0%, 3%);
 }
-.dataframetbody tr.active-row {
-    font-weight: bold;
-    color: #009879;
-}
-    </style>
+
+</style>
+
 <br>
-<h3 style="margin:10px 20px;">Select City to search in</h3>
 <div style="margin:10px 20px;" class="dropdown">
     
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Dropdown
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-      <button class="dropdown-item" type="button">Cary</button>
-      <button class="dropdown-item" type="button">Raleigh</button>
-      <button class="dropdown-item" type="button">Knightdale</button>
-      <button class="dropdown-item" type="button">Apex</button>
-      <button class="dropdown-item" type="button">Morrisville</button>
-      <button class="dropdown-item" type="button">Fuaquay Varina</button>
-
+    <form action="/searchRestuarentsOutput/" method="post">
+        {% csrf_token %}
+    <div class="input-group mb-2">
+        <label class="input-group-text" for="inputGroupSelect01">Select City</label>
+        <select class="form-select" name = "CityName" required>
+          <option selected>Choose...</option>
+          <option value="RALEIGH">Raleigh</option>
+          <option value="CARY">Cary</option>
+          <option value="APEX">Apex</option>
+          <option value="MORRISVILLE">Morrisville</option>
+          <option value="FUQUAY VARINA">Fuquay Varina</option>
+          <option value="GARNER">Garner</option>
+          <option value="HOLLY SPRINGS">Holly Springs</option>
+          <option value="KNIGHTDALE">Kinghtdale</option>
+          <option value="ZEBULON">Zebulon</option>
+          <option value="WENDELL">Wendell</option>
+          <option value="ROLESVILLE">Rolesville</option>
+          <option value="CLAYTON">Clayton</option>
+        </select>
+      </div>
+    <div class="input-group flex-nowrap">
+        <span class="input-group-text" id="date1">Enter Year Restuarant was open</span>
+        <input type="int" name="year" value = 2021 required/><br><br>
     </div>
+    <br>
+    <button type = "submit" class = "btn btn-dark">Submit</button><br> <br>
+
 
     <div style="margin:10px 20px;" >
-        {%if df_Incity_html %}
-        {{df_Incity_html|safe}}
-        {% else %}
-        <p>No graph was provided.</p>
+        {%if df_search_html %}
+        {{df_search_html|safe}}
         {% endif %}
 
     </div>
-
+    </form>
 </div>
 
 {% endblock %}
