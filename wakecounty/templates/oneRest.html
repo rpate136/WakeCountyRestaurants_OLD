@@ -46,8 +46,8 @@
     {% endif %}
 
     <br><br>
-    
     {% if graph %}
+    <h3>Catogery of Inspection</h3>
     {{ graph|safe }}
     {% endif %}
 
@@ -55,12 +55,14 @@
 
 
     {% if desc %}
+    <h3>Description of Inspection</h3>
     {{ desc|safe }}
     {% endif %}
 
     <br><br>
 
     {% if violation %}
+    <h3>Violation Type</h3>
     {{ violation|safe }}
     {% endif %}
     
