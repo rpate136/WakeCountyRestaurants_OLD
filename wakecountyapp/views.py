@@ -70,10 +70,6 @@ def searchRestuarents(request):
 def oneRestaurant(request):
     return render(request,"oneRest.html")
 
-def overallAnalysis(request):
-    df = getInspectionDf()
-    return render(request,"overallAnalysis.html")
-
 # Methods that return the elements when forms are submitted
 
 
@@ -130,7 +126,7 @@ def RestaurantAnalysis(request):
     cityDF = cityDF[cityDF['CITY'] >= 3]
     cityDF = cityDF.reset_index()
     cityDF = cityDF.rename(columns={"index":'City' , "CITY": 'Total'})  
-    city_fig = px.bar(cityDF, x='City', y='Total', title='Number of Resturants in each city')
+    city_fig = px.bar(cityDF, x='City', y='Total', title='Number of restaurants in each city')
     city_fig = city_fig.to_html()
     
     #Types of Restuarent pie chart 
@@ -142,9 +138,9 @@ def RestaurantAnalysis(request):
     #Number of restuarants over time in wake county
     numRestWTime = pd.DataFrame(df['year'].value_counts())
     numRestWTime = numRestWTime.reset_index()
-    numRestWTime = numRestWTime.rename(columns={"index":'Year' , "year": 'Number Of Restuarants'})  
+    numRestWTime = numRestWTime.rename(columns={"index":'Year' , "year": 'Number Of restaurants'})  
     numRestWTime = numRestWTime.sort_values(by=['Year'])
-    numRestWTime_fig = px.line(numRestWTime, x='Year', y="Number Of Restuarants",title='Number of Restuarants with time in Wake County')
+    numRestWTime_fig = px.line(numRestWTime, x='Year', y="Number Of restaurants",title='Number of Restuarants with time in Wake County')
     numRestWTime_fig = numRestWTime_fig.to_html(full_html=False, default_height=500, default_width=800)
 
     mapDF = df[['HSISID','NAME','CITY','X','Y','GEOCODESTATUS','FACILITYTYPE']].copy()
@@ -158,3 +154,35 @@ def RestaurantAnalysis(request):
     graphs = {'facilityType': facttype_fig , 'numRestinCity':city_fig , 'numOfRest':numRestWTime_fig , 'map': mapDF_fig}
     return render(request,"RestInWakeAnalysis.html",graphs)
 
+
+def overallAnalysis(request):
+    df = getInspectionDf()
+    restaurants = getRestaurantsDf()
+
+    inspector = pd.DataFrame(df['INSPECTEDBY'].value_counts())
+    inspector = inspector.reset_index()
+    inspector = inspector.rename(columns={"INSPECTEDBY":'TOTAL' , 'index':'Inspector Name'})
+    inspector = inspector.head(20)
+    inspector_fig = px.bar(inspector, x='Inspector Name', y='TOTAL', title='Number of inspections by Inspector')
+    inspector_fig = inspector_fig.to_html()
+
+    violationCode = pd.DataFrame(df['VIOLATIONCODE'].value_counts())
+    violationCode = violationCode.reset_index()
+    violationCode = violationCode.rename(columns={"VIOLATIONCODE":'TOTAL' , 'index':'Violation Code'})
+    violationCode = violationCode.head(20)
+    violationCode_fig = px.bar(violationCode, x='Violation Code', y='TOTAL', title='Total of Violation Types')
+    violationCode_fig = violationCode_fig.to_html()
+
+    dfCriticalYes = df[df['CRITICAL'] == "Yes"]
+    criticalDF = pd.DataFrame(dfCriticalYes['HSISID'].value_counts())
+    criticalDF = criticalDF.reset_index()
+    criticalDF = criticalDF.rename(columns={"HSISID":'TOTAL' , 'index':'HSISID'})
+    criticalDF = criticalDF.head(20)
+    criticalDF.set_index('HSISID', inplace=True)
+    restaurantsBasicInfo = restaurants[["NAME",'HSISID','ADDRESS1','CITY']]
+    restaurantsBasicInfo.set_index('HSISID', inplace=True)
+    topInspecRestDF = criticalDF.merge(restaurantsBasicInfo, on = 'HSISID' , how='left')
+    topInspecRestDF_fig = topInspecRestDF.to_html()
+
+    graphs = {'inspector':inspector_fig , 'violation': violationCode_fig, 'top20Rest': topInspecRestDF_fig}
+    return render(request,"overallAnalysis.html",graphs)
