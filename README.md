@@ -7,3 +7,6 @@ The Overall Inspection page on the website is reading 420K+ rows and so will tak
 
 Link to wake county data: 
 https://data-wake.opendata.arcgis.com/search?tags=restaurants
+
+Link to Project Explanation video:
+https://www.youtube.com/watch?v=y8Us1HkYDL4&ab_channel=icelion7
